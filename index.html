@@ -6,15 +6,16 @@
   <title>Change Calculator (EUR/BGN)</title>
   <style>
     :root{
-      --bg1:#6b78ff;
-      --bg2:#6a55c9;
+      /* Trakia University (burgundy) inspired palette */
+      --bg1:#6F0F1B;      /* deep burgundy */
+      --bg2:#9F1D2E;      /* lighter burgundy */
       --card:#ffffff;
       --text:#111827;
       --muted:#6b7280;
       --line:#e5e7eb;
 
-      --primary:#6b63ff;
-      --primary2:#4f7cff;
+      --primary:#8E1627;  /* main accent */
+      --primary2:#B21E33; /* lighter accent */
 
       --dangerBg:#fdecec;
       --dangerText:#d24b4b;
@@ -27,7 +28,7 @@
       --fieldRadius: 14px;
       --toggleRadius: 14px;
 
-      --focus: 0 0 0 4px rgba(107,99,255,.18);
+      --focus: 0 0 0 4px rgba(142,22,39,.18);
     }
 
     *{ box-sizing:border-box; }
@@ -105,7 +106,10 @@
       border: 2px solid #e6e7ef;
       outline: none;
     }
-    input:focus{ border-color: rgba(79,124,255,.55); box-shadow: var(--focus); }
+    input:focus{
+      border-color: rgba(178,30,51,.55);
+      box-shadow: var(--focus);
+    }
     input::placeholder{ color: #9ca3af; }
 
     .swapBtn{
@@ -121,7 +125,7 @@
       user-select:none;
       transition: transform .05s ease, background .15s ease;
     }
-    .swapBtn:hover{ background:#eef2ff; }
+    .swapBtn:hover{ background:#f7eef0; }
     .swapBtn:active{ transform: translateY(1px); }
 
     .swapIcon{ width: 22px; height: 22px; position: relative; }
@@ -155,8 +159,8 @@
       display:flex;
       border-radius: var(--toggleRadius);
       overflow:hidden;
-      border: 1px solid rgba(107,99,255,.25);
-      background: linear-gradient(135deg, rgba(79,124,255,.9), rgba(107,99,255,.9));
+      border: 1px solid rgba(142,22,39,.25);
+      background: linear-gradient(135deg, rgba(178,30,51,.92), rgba(142,22,39,.92));
       padding: 4px;
       gap: 4px;
       min-width: 140px;
@@ -170,7 +174,7 @@
       font-weight: 800;
       cursor:pointer;
       background: transparent;
-      color: rgba(255,255,255,.90);
+      color: rgba(255,255,255,.92);
     }
     .toggle button.active{
       background: #ffffff;
@@ -231,7 +235,7 @@
       font-weight: 650;
       color: #374151;
     }
-    .linkBtn:hover{ background:#eef2ff; }
+    .linkBtn:hover{ background:#f7eef0; }
   </style>
 </head>
 
@@ -323,14 +327,12 @@
 
     function toEUR(amount, cur){
       if(cur === "EUR") return amount;
-      // BGN -> EUR
-      return amount / RATE_BGN_PER_EUR;
+      return amount / RATE_BGN_PER_EUR; // BGN -> EUR
     }
 
     function fromEUR(amountEUR, cur){
       if(cur === "EUR") return amountEUR;
-      // EUR -> BGN
-      return amountEUR * RATE_BGN_PER_EUR;
+      return amountEUR * RATE_BGN_PER_EUR; // EUR -> BGN
     }
 
     function recalc(){
@@ -407,7 +409,6 @@
     $("swapBtn").addEventListener("click", swapInputCurrencies);
     $("resetBtn").addEventListener("click", resetAll);
 
-    // initial
     resetAll();
   </script>
 </body>
