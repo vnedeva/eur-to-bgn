@@ -221,6 +221,17 @@
       color: var(--muted);
       font-size: 14px;
     }
+
+    .linkBtn{
+      border: 1px solid var(--line);
+      background: #f9fafb;
+      padding: 10px 12px;
+      border-radius: 12px;
+      cursor:pointer;
+      font-weight: 650;
+      color: #374151;
+    }
+    .linkBtn:hover{ background:#eef2ff; }
   </style>
 </head>
 
@@ -267,7 +278,7 @@
 
       <div class="smallRow">
         <span id="status">Enter values to calculate.</span>
-        <span></span>
+        <button class="linkBtn" id="resetBtn" type="button">Reset</button>
       </div>
 
       <div class="rate" id="rateLine">Fixed rate: 1 EUR = 1.95583 BGN</div>
@@ -365,6 +376,22 @@
       recalc();
     }
 
+    function resetAll(){
+      $("price").value = "";
+      $("paid").value = "";
+
+      priceCur = "EUR";
+      paidCur  = "EUR";
+      outCur   = "EUR";
+      setToggle("price", "EUR");
+      setToggle("paid", "EUR");
+      setToggle("out", "EUR");
+
+      $("changeBox").textContent = "—";
+      $("changeBox").className = "resultBox";
+      $("status").textContent = "Enter values to calculate.";
+    }
+
     $("price").addEventListener("input", recalc);
     $("paid").addEventListener("input", recalc);
 
@@ -378,8 +405,10 @@
     $("outBGN").addEventListener("click", () => { outCur="BGN"; setToggle("out","BGN"); recalc(); });
 
     $("swapBtn").addEventListener("click", swapInputCurrencies);
+    $("resetBtn").addEventListener("click", resetAll);
 
-    recalc();
+    // initial
+    resetAll();
   </script>
 </body>
 </html>
