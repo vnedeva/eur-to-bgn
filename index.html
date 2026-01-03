@@ -3,24 +3,25 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-
-<link rel="icon" type="image/png" sizes="32x32" href="favicon-eur-bgn.png">
-<link rel="apple-touch-icon" href="favicon-eur-bgn.png">
-
-<meta name="theme-color" content="#B5162E">
   <title>Change Calculator (EUR/BGN)</title>
+
+  <!-- If you use a single PNG for both, this is fine -->
+  <link rel="icon" type="image/png" href="favicon-eur-bgn.png">
+  <link rel="apple-touch-icon" href="favicon-eur-bgn.png">
+  <meta name="theme-color" content="#B5162E">
+
   <style>
     :root{
       /* Trakia University (burgundy) inspired palette */
-      --bg1:#6F0F1B;      /* deep burgundy */
-      --bg2:#9F1D2E;      /* lighter burgundy */
+      --bg1:#6F0F1B;
+      --bg2:#9F1D2E;
       --card:#ffffff;
       --text:#111827;
       --muted:#6b7280;
       --line:#e5e7eb;
 
-      --primary:#8E1627;  /* main accent */
-      --primary2:#B21E33; /* lighter accent */
+      --primary:#8E1627;
+      --primary2:#B21E33;
 
       --dangerBg:#fdecec;
       --dangerText:#d24b4b;
@@ -101,7 +102,6 @@
       gap: 14px;
       align-items:center;
     }
-    .row.withSwap{ grid-template-columns: 1fr auto auto; }
 
     input{
       width: 100%;
@@ -111,54 +111,8 @@
       border: 2px solid #e6e7ef;
       outline: none;
     }
-    input:focus{
-      border-color: rgba(178,30,51,.55);
-      box-shadow: var(--focus);
-    }
+    input:focus{ border-color: rgba(178,30,51,.55); box-shadow: var(--focus); }
     input::placeholder{ color: #9ca3af; }
-
-    .swapBtn{
-      width: 56px;
-      height: 56px;
-      border-radius: 14px;
-      border: 1px solid var(--line);
-      background: #f3f4f6;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      cursor:pointer;
-      user-select:none;
-      transition: transform .05s ease, background .15s ease;
-    }
-    .swapBtn:hover{ background:#f7eef0; }
-    .swapBtn:active{ transform: translateY(1px); }
-
-    .swapIcon{ width: 22px; height: 22px; position: relative; }
-    .swapIcon:before, .swapIcon:after{
-      content:"";
-      position:absolute;
-      left:0; right:0;
-      top: 5px;
-      height: 2px;
-      background: #6b7280;
-      border-radius: 2px;
-    }
-    .swapIcon:after{ top: 15px; }
-    .swapIcon .a, .swapIcon .b{
-      position:absolute;
-      width: 7px; height: 7px;
-      border-right: 2px solid #6b7280;
-      border-top: 2px solid #6b7280;
-      transform: rotate(45deg);
-      top: 1px;
-      right: 0px;
-    }
-    .swapIcon .b{
-      transform: rotate(225deg);
-      top: 11px;
-      left: 0px;
-      right: auto;
-    }
 
     .toggle{
       display:flex;
@@ -231,6 +185,14 @@
       font-size: 14px;
     }
 
+    .btnRow{
+      display:flex;
+      gap: 10px;
+      align-items:center;
+      justify-content:flex-end;
+      flex-wrap:wrap;
+    }
+
     .linkBtn{
       border: 1px solid var(--line);
       background: #f9fafb;
@@ -239,6 +201,8 @@
       cursor:pointer;
       font-weight: 650;
       color: #374151;
+      user-select:none;
+      white-space:nowrap;
     }
     .linkBtn:hover{ background:#f7eef0; }
   </style>
@@ -263,11 +227,9 @@
       </div>
 
       <div class="label">Amount paid</div>
-      <div class="row withSwap">
+      <!-- NO arrows here anymore -->
+      <div class="row">
         <input id="paid" inputmode="decimal" placeholder="0.00" />
-        <button class="swapBtn" id="swapBtn" type="button" aria-label="Swap input currencies">
-          <span class="swapIcon" aria-hidden="true"><span class="a"></span><span class="b"></span></span>
-        </button>
         <div class="toggle" role="group" aria-label="Amount paid currency">
           <button id="paidEUR" class="active" type="button">EUR</button>
           <button id="paidBGN" type="button">BGN</button>
@@ -287,7 +249,10 @@
 
       <div class="smallRow">
         <span id="status">Enter values to calculate.</span>
-        <button class="linkBtn" id="resetBtn" type="button">Reset</button>
+        <div class="btnRow">
+          <button class="linkBtn" id="swapBtn" type="button">Swap</button>
+          <button class="linkBtn" id="resetBtn" type="button">Reset</button>
+        </div>
       </div>
 
       <div class="rate" id="rateLine">Fixed rate: 1 EUR = 1.95583 BGN</div>
@@ -374,7 +339,8 @@
       }
     }
 
-    function swapInputCurrencies(){
+    function swapCurrencies(){
+      // Swap the selected currencies for price and paid (inputs only)
       const tmp = priceCur;
       priceCur = paidCur;
       paidCur = tmp;
@@ -411,11 +377,11 @@
     $("outEUR").addEventListener("click", () => { outCur="EUR"; setToggle("out","EUR"); recalc(); });
     $("outBGN").addEventListener("click", () => { outCur="BGN"; setToggle("out","BGN"); recalc(); });
 
-    $("swapBtn").addEventListener("click", swapInputCurrencies);
+    $("swapBtn").addEventListener("click", swapCurrencies);
     $("resetBtn").addEventListener("click", resetAll);
 
+    // initial
     resetAll();
   </script>
 </body>
 </html>
-
