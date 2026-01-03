@@ -1,17 +1,16 @@
 <!doctype html>
-<html lang="en">
+<html lang="bg">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Bul Lev Calculator (EUR/BGN)</title>
+  <title>Калкулатор за ресто (€ / лв)</title>
 
-  <!-- If you use a single PNG for both, this is fine -->
-<link rel="icon" type="image/png" href="favicon-eur-bgn.png?v=3">
-<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=3">
-<meta name="theme-color" content="#B5162E">
-   <style>
+  <link rel="icon" type="image/png" href="favicon-eur-bgn.png">
+  <link rel="apple-touch-icon" href="favicon-eur-bgn.png">
+  <meta name="theme-color" content="#B5162E">
+
+  <style>
     :root{
-      /* Trakia University (burgundy) inspired palette */
       --bg1:#6F0F1B;
       --bg2:#9F1D2E;
       --card:#ffffff;
@@ -74,7 +73,7 @@
       justify-content:center;
       color:#fff;
       font-size: 34px;
-      font-weight: 700;
+      font-weight: 800;
       user-select:none;
     }
     h1{
@@ -121,18 +120,19 @@
       background: linear-gradient(135deg, rgba(178,30,51,.92), rgba(142,22,39,.92));
       padding: 4px;
       gap: 4px;
-      min-width: 140px;
+      min-width: 124px; /* малко по-тясно, защото са само символи */
     }
     .toggle button{
       flex:1;
       border: none;
       border-radius: 12px;
       padding: 12px 10px;
-      font-size: 18px;
-      font-weight: 800;
+      font-size: 20px;   /* символите да са по-четими */
+      font-weight: 900;
       cursor:pointer;
       background: transparent;
       color: rgba(255,255,255,.92);
+      line-height: 1;
     }
     .toggle button.active{
       background: #ffffff;
@@ -210,58 +210,56 @@
 <body>
   <main class="card">
     <div class="top">
-      <div class="icon">€</div>
-      <h1>Change Calculator</h1>
-      <p class="subtitle">Calculate change quickly and accurately</p>
+      <div class="icon">лв</div>
+      <h1>Калкулатор за ресто</h1>
+      <p class="subtitle">Бързо изчисляване на ресто</p>
     </div>
 
     <section class="section">
-      <div class="label">Product price</div>
+      <div class="label">Цена</div>
       <div class="row">
-        <input id="price" inputmode="decimal" placeholder="0.00" />
-        <div class="toggle" role="group" aria-label="Product price currency">
-          <button id="priceEUR" class="active" type="button">EUR</button>
-          <button id="priceBGN" type="button">BGN</button>
+        <input id="price" inputmode="decimal" placeholder="0.00" aria-label="Цена" />
+        <div class="toggle" role="group" aria-label="Валута за цена">
+          <button id="priceEUR" class="active" type="button">€</button>
+          <button id="priceBGN" type="button">лв</button>
         </div>
       </div>
 
-      <div class="label">Amount paid</div>
-      <!-- NO arrows here anymore -->
+      <div class="label">Платено</div>
       <div class="row">
-        <input id="paid" inputmode="decimal" placeholder="0.00" />
-        <div class="toggle" role="group" aria-label="Amount paid currency">
-          <button id="paidEUR" class="active" type="button">EUR</button>
-          <button id="paidBGN" type="button">BGN</button>
+        <input id="paid" inputmode="decimal" placeholder="0.00" aria-label="Платено" />
+        <div class="toggle" role="group" aria-label="Валута за платено">
+          <button id="paidEUR" class="active" type="button">€</button>
+          <button id="paidBGN" type="button">лв</button>
         </div>
       </div>
 
       <div class="divider"></div>
 
-      <div class="label">Change</div>
+      <div class="label">Ресто</div>
       <div class="row">
         <div id="changeBox" class="resultBox">—</div>
-        <div class="toggle" role="group" aria-label="Change currency">
-          <button id="outEUR" class="active" type="button">EUR</button>
-          <button id="outBGN" type="button">BGN</button>
+        <div class="toggle" role="group" aria-label="Валута за ресто">
+          <button id="outEUR" class="active" type="button">€</button>
+          <button id="outBGN" type="button">лв</button>
         </div>
       </div>
 
       <div class="smallRow">
-        <span id="status">Enter values to calculate.</span>
+        <span id="status">Въведете стойности за изчисление.</span>
         <div class="btnRow">
-          <button class="linkBtn" id="swapBtn" type="button">Swap</button>
-          <button class="linkBtn" id="resetBtn" type="button">Reset</button>
+          <button class="linkBtn" id="swapBtn" type="button">Размени</button>
+          <button class="linkBtn" id="resetBtn" type="button">Изчисти</button>
         </div>
       </div>
 
-      <div class="rate" id="rateLine">Fixed rate: 1 EUR = 1.95583 BGN</div>
+      <div class="rate" id="rateLine">Фиксиран курс: 1 € = 1.95583 лв</div>
     </section>
   </main>
 
   <script>
     const $ = (id) => document.getElementById(id);
 
-    // Fixed EUR/BGN peg
     const RATE_BGN_PER_EUR = 1.95583;
 
     let priceCur = "EUR";
@@ -277,7 +275,7 @@
 
     function fmt(n){
       if(!isFinite(n)) return "—";
-      return new Intl.NumberFormat("en-GB", {
+      return new Intl.NumberFormat("bg-BG", {
         minimumFractionDigits: 2,
         maximumFractionDigits: 2
       }).format(n);
@@ -314,7 +312,7 @@
       if(!isFinite(price) || !isFinite(paid)){
         box.textContent = "—";
         box.className = "resultBox";
-        status.textContent = "Enter values to calculate.";
+        status.textContent = "Въведете стойности за изчисление.";
         return;
       }
 
@@ -328,18 +326,17 @@
 
       if(changeEUR < -1e-9){
         box.className = "resultBox negative";
-        status.textContent = "Paid amount is less than the price.";
+        status.textContent = "Платената сума е по-малка от цената.";
       }else if(changeEUR > 1e-9){
         box.className = "resultBox positive";
-        status.textContent = "OK — change is shown above.";
+        status.textContent = "ОК — рестото е показано по-горе.";
       }else{
         box.className = "resultBox";
-        status.textContent = "Exact amount — no change.";
+        status.textContent = "Точна сума — няма ресто.";
       }
     }
 
     function swapCurrencies(){
-      // Swap the selected currencies for price and paid (inputs only)
       const tmp = priceCur;
       priceCur = paidCur;
       paidCur = tmp;
@@ -361,7 +358,7 @@
 
       $("changeBox").textContent = "—";
       $("changeBox").className = "resultBox";
-      $("status").textContent = "Enter values to calculate.";
+      $("status").textContent = "Въведете стойности за изчисление.";
     }
 
     $("price").addEventListener("input", recalc);
@@ -379,7 +376,6 @@
     $("swapBtn").addEventListener("click", swapCurrencies);
     $("resetBtn").addEventListener("click", resetAll);
 
-    // initial
     resetAll();
   </script>
 </body>
