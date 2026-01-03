@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256">
+  <defs>
+    <linearGradient id="g2" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#4B0B12"/>
+      <stop offset="1" stop-color="#B5162E"/>
+    </linearGradient>
+    <radialGradient id="shine2" cx="30%" cy="25%" r="60%">
+      <stop offset="0" stop-color="rgba(255,255,255,0.65)"/>
+      <stop offset="0.55" stop-color="rgba(255,255,255,0.10)"/>
+      <stop offset="1" stop-color="rgba(255,255,255,0)"/>
+    </radialGradient>
+  </defs>
+
+  <rect x="14" y="14" width="228" height="228" rx="44" fill="url(#g2)"/>
+  <rect x="14" y="14" width="228" height="228" rx="44" fill="url(#shine2)"/>
+  <rect x="14" y="14" width="228" height="228" rx="44" fill="none" stroke="rgba(255,255,255,0.55)" stroke-width="6"/>
+
+  <text x="128" y="122" text-anchor="middle"
+        font-family="system-ui, -apple-system, Segoe UI, Roboto, Arial"
+        font-size="80" font-weight="900" fill="#ffffff">€</text>
+  <text x="128" y="172" text-anchor="middle"
+        font-family="system-ui, -apple-system, Segoe UI, Roboto, Arial"
+        font-size="34" font-weight="800" fill="rgba(255,255,255,0.92)">BGN</text>
+</svg>
